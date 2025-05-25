@@ -1,0 +1,24 @@
+# Includes metadata information for the role, its dependencies, the author, license, available platform, etc.
+---
+dependencies: []
+
+galaxy_info:
+  role_name: deploy-docker-compose
+  author: mhorlacher
+  description: Deploying docker-compose services.
+  license: "license (BSD, MIT)"
+  min_ansible_version: 2.10
+  platforms:
+    - name: Fedora
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+  galaxy_tags:
+    - docker
+    - docker-compose
+    - deploy

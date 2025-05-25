@@ -1,0 +1,43 @@
+# A list of tasks to be executed by the role. This part could be considered similar to the task section of a playbook.
+---
+tasks:
+  - name: Print the remote user
+    debug:
+      msg: "Logged in as {{ ansible_user_id }}"
+
+  # Get information about the service directory (i.e. to check later if it exists)
+  - name: Get services directory stats
+    ansible.builtin.stat:
+      path: ~/docker-services/{{ service_name }}
+    register: services_path
+
+  - name: Tear down existing docker-compose services (if it exists)
+    community.docker.docker_compose_v2:
+      project_src: ~/docker-services/{{ service_name }}
+      state: absent
+      remove_volumes: false
+    when: services_path.stat.exists
+    ignore_errors: yes # If there is an error in the docker-compose file, we want to ignore it and continue with the playbook. 
+
+  # Remove existing docker services directory (if it exists)
+  - name: Removing service directory
+    ansible.builtin.file:
+      path: ~/docker-services/{{ service_name }}
+      state: absent
+    when: services_path.stat.exists
+
+  # Copy services directory to host(s)
+  - name: Copy service directory (to be used by docker-compose)
+    ansible.builtin.copy:
+      src: services/
+      dest: ~/docker-services/{{ service_name }}/
+      mode: '777' # TODO: Change this to something more secure
+    
+  # TODO: Pull latested docker images in compose file
+  
+  # Start compose services
+  - name: Run `docker-compose up`
+    community.docker.docker_compose_v2:
+      project_src: ~/docker-services/{{ service_name }}
+      state: present
+      build: always

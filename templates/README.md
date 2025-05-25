@@ -1,0 +1,2 @@
+Contains Jinja2 template files used by tasks of the role. With Ansible templating, users can dynamically 
+generate text-based files using templates, variables, and facts for configuration and other purposes. 
