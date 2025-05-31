@@ -1,1 +1,2 @@
 # Contains some sane default values for variables of the role.
+service_name: my_service

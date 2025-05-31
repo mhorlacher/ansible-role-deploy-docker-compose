@@ -1,0 +1,40 @@
+---
+- name: 
+  hosts: all
+
+
+  vars:
+    user: vagrant
+    service_name: test_service
+    local_service_dir: ./some_service/
+
+  tasks:
+
+    # --- Install requirements
+    - name: Update and upgrade apt packages
+      ansible.builtin.apt:
+        upgrade: true
+        update_cache: true
+        cache_valid_time: 86400 # one day
+      become: true
+    
+    - name: Install requirements
+      block:
+        - name: Include Docker role
+          ansible.builtin.include_role:
+            name: geerlingguy.docker
+          vars:
+            docker_users:
+              - "{{ user }}"
+
+        - name: Install pip
+          ansible.builtin.include_role:
+            name: geerlingguy.pip 
+
+      # NOTE: Using a block to selectively give "become" to this role, as become can not otherwise be added to roles. 
+      become: true
+
+    # --- Test
+    - name: Test deploy-docker-compose role
+      ansible.builtin.include_role:
+        name: deploy-docker-compose

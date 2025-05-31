@@ -1,0 +1,10 @@
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    command: --admin-password-file /tmp/portainer-admin-pass
+    volumes:
+      - ./portainer-admin-pass:/tmp/portainer-admin-pass
+    ports:
+      - 9000:9000

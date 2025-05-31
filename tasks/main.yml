@@ -1,6 +1,5 @@
 # A list of tasks to be executed by the role. This part could be considered similar to the task section of a playbook.
 ---
-tasks:
   - name: Print the remote user
     debug:
       msg: "Logged in as {{ ansible_user_id }}"
@@ -10,6 +9,8 @@ tasks:
     ansible.builtin.stat:
       path: ~/docker-services/{{ service_name }}
     register: services_path
+
+  # TODO: Compare hashes between current and new docker-compose file(s) and skip if same
 
   - name: Tear down existing docker-compose services (if it exists)
     community.docker.docker_compose_v2:
@@ -29,15 +30,22 @@ tasks:
   # Copy services directory to host(s)
   - name: Copy service directory (to be used by docker-compose)
     ansible.builtin.copy:
-      src: services/
+      src: "{{ local_service_dir }}"
       dest: ~/docker-services/{{ service_name }}/
-      mode: '777' # TODO: Change this to something more secure
-    
-  # TODO: Pull latested docker images in compose file
-  
+      mode: '0700' # TODO: Change this to something more secure
+
+  # Log in to GitHub Container Registry using a personal access token
+  - name: Log in to GitHub Container Registry
+    community.docker.docker_login:
+      registry: ghcr.io
+      username: "{{ GITHUB_USERNAME }}"
+      password: "{{ GITHUB_PAT }}"
+    when: GITHUB_USERNAME is defined
+
   # Start compose services
   - name: Run `docker-compose up`
     community.docker.docker_compose_v2:
       project_src: ~/docker-services/{{ service_name }}
       state: present
       build: always
+      pull: always
