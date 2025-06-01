@@ -32,15 +32,15 @@
     ansible.builtin.copy:
       src: "{{ local_service_dir }}"
       dest: ~/docker-services/{{ service_name }}/
-      mode: '0700' # TODO: Change this to something more secure
+      mode: '0700'
 
   # Log in to GitHub Container Registry using a personal access token
   - name: Log in to GitHub Container Registry
     community.docker.docker_login:
       registry: ghcr.io
-      username: "{{ GITHUB_USERNAME }}"
-      password: "{{ GITHUB_PAT }}"
-    when: GITHUB_USERNAME is defined
+      username: "{{ github_username }}"
+      password: "{{ github_PAT }}"
+    when: github_username is defined
 
   # Start compose services
   - name: Run `docker-compose up`
