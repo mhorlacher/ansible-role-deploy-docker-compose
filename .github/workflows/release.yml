@@ -1,7 +1,9 @@
 ---
-name: Release
+# This workflow requires a GALAXY_API_KEY secret present in the GitHub
+# repository or organization.
 
-on:
+name: Release
+'on':
   push:
     tags:
       - '*'
