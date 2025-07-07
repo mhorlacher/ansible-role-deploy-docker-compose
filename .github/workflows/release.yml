@@ -6,6 +6,10 @@ on:
     tags:
       - '*'
 
+defaults:
+  run:
+    working-directory: 'mhorlacher.deploy-docker-compose'
+
 jobs:
 
   release:
