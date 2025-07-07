@@ -35,4 +35,5 @@
     # --- Test
     - name: Test deploy-docker-compose role
       ansible.builtin.include_role:
-        name: deploy-docker-compose
+      # NOTE: For local development, add a simlink to the role directory to tests/roles/
+        name: mhorlacher.deploy-docker-compose
