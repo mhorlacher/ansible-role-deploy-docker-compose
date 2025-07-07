@@ -1,0 +1,1 @@
+# Test: Deploy a Portainer service on a Vagrant machine
