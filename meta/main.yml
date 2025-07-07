@@ -1,7 +1,6 @@
 # Includes metadata information for the role, its dependencies, the author, license, available platform, etc.
 ---
-dependencies:
-  - role
+dependencies: []
 
 galaxy_info:
   role_name: deploy-docker-compose
