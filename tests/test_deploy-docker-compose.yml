@@ -36,4 +36,5 @@
     - name: Test deploy-docker-compose role
       ansible.builtin.include_role:
       # NOTE: For local development, add a simlink to the role directory to tests/roles/
+      # (galaxy does not permit simlinks in the role directory tree)
         name: mhorlacher.deploy-docker-compose
