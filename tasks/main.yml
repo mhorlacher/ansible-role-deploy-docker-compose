@@ -4,6 +4,11 @@
     debug:
       msg: "Logged in as {{ ansible_user_id }}"
 
+  - name: Check if service_name is defined
+    fail:
+      msg: "Variable 'service_name' is not defined!"
+    when: service_name is not defined
+
   # Get information about the service directory (i.e. to check later if it exists)
   - name: Get services directory stats
     ansible.builtin.stat:

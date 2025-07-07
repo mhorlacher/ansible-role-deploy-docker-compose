@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-    config.vm.box = "bento/ubuntu-22.04" #"debian/buster64" #"bento/ubuntu-22.04"
+    config.vm.box = "bento/ubuntu-22.04"
 
     # Set CPU and Memory
     config.vm.provider "virtualbox" do |vb|
