@@ -54,4 +54,4 @@
       state: present
       build: always
       pull: always
-    environment: {{ compose_env_vars }}
+    environment: "{{ compose_env_vars }}"
