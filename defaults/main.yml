@@ -1,2 +1,3 @@
 # Contains some sane default values for variables of the role.
 service_name: my_service
+compose_env_vars: {} # contains environment variables for the docker-compose launch
